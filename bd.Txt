@@ -7,7 +7,7 @@ CREATE TABLE medecin(
 );
 
 CREATE TABLE patient(
-   id_patient COUNTER,
+   id_patient INT AUTO_INCREMENT,
    num_securite_social INT NOT NULL,
    nom VARCHAR(50),
    prenom VARCHAR(50),
@@ -24,7 +24,7 @@ CREATE TABLE patient(
 CREATE TABLE rdv(
    id_patient INT,
    id_medecin VARCHAR(50),
-   id_rdv COUNTER,
+   id_rdv INT AUTO_INCREMENT,
    date_rdv DATE,
    duree TIME,
    PRIMARY KEY(id_patient, id_medecin, id_rdv),
