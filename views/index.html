@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset = >
+        <link rel= type= href=>
+        <title> Page Title</title>
+    </head>
+    <body>
+        <h1>Commençons ce projet</h1>
+            <p>Dans ce projet il y aura :<br/>
+                    - Une base de donnée<br/>
+                    - de la POO en PHP ( je sais pas si ca va être ouf)<br/>
+                    - Un serveur en ligne avec une URL qui fonctionne<br/>
+                    - Un bon design de CSS<br/>
+                    - vérifier les hack possible avec la base de donnée <br/>
+                    - Vérifier si la base de donnée s'actualise en fonction des nouvelle utilisateur<br/>
+                    - La prise de rendez-vous du client doit être en quelquc clique<br/>
+                    - Vérifier la régle des 3 clique  <br/>               
+            </p>
+
+            <h2>Le formulaire d'entrée</h2>
+        <form action="controllers/index.php" method="POST">
+            <div>
+                <label for="nom">Nom :</label>
+                <input type="text" id="nom" name="user_name" >
+            </div>
+            <div>
+                <label for="Prenom">Prénom :</label>
+                <input type="text" id="Prénom" name="user_prenom" >
+            </div>
+            <div>
+                <label for="Adresse">Adresse :</label>
+                <input type="text" id="Adresse" name="user_adresse" >
+            </div>
+            <div>
+                <label for="Cp">Code postal :</label>
+                <input type="text" id="cp" name="user_code_postal" >
+            </div>
+            <div>
+                <label for="date_naissance">date de naissance :</label>
+                <input type="text" id="cp" name="user_naissance" >
+            </div>
+            <div>
+                <label for="civilité">civilité :</label>
+                <input type="text" id="tel" name="user_civile" >
+            </div>
+            <div>
+                <label for="Lieu_naissance">Lieu de naissance :</label>
+                <input type="text" id="résultat" name="user_lieu_naissance" >
+            </div>
+            <div>
+                <label for="Num_secu">Numéro de sécurité social :</label>
+                <input type="number" id="résultat" name="user_num_secu" >
+            </div>
+            <input type="submit" id="envoyer" name="user_valider" value="Valider">
+            <input type="reset" id="envoyer" name="user_valider" value="Effacer">
+        </form>
+    </body>
+</html>
