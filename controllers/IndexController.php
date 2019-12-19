@@ -1,57 +1,79 @@
-<?php
-    namespace yasmf;
-    use yasmf/DataSource;
-    use yasmf/Router;
+<!DOCTYPE html>
+    <meta charset = 'UTF8'> 
+    <?php
+        class GestionDataBase {
 
-    class connexion {
+            private $login;
+            private $pw;
+            private $serveur;
+            private $database;
+            private $pdo;
 
-        private $login;
-        private $pw;
-        private $serveur;
-        private $database;
-
-        public function __construct($log,$pass,$server,$db){
-            $login = $log;
-            $pw = $pass;
-            $serveur = $server;
-            $database = $db;
-        }
-
-        public function tryConnexion(){
-            try {  
-                $linkpdo = new PDO("mysql:host=$server;dbname=$db", $login, $mdp);    
-            }catch (Exception $e) {
-                die('Erreur : '. $e->getMessage());     
+            public function __construct($log,$pass,$server,$db){
+                $this->login = $log;
+                $this->pw = $pass;
+                $this->serveur = $server;
+                $this->database = $db;
             }
-        }
 
-        public function getValuePost(){
-            $nom = $_POST['user_nom'];
-            $prenom = $_POST['user_prenom'];
-            $adresse = $_POST['user_adresse'];
-            $ville = $_POST['user_ville'];
-            $codepostal = $_POST['user_code_postal'];
-            $civiliter = $_POST['user_civile'];
-            $naissance = $_POST['user_naissance'];
-            $lieuNaissance = $_POST['user_lieu_naissance'];
-            $numsecu = $_POST['user_num_secu'];
+            public function tryConnexion(){
+                try {  
+                 $this->pdo = $linkpdo = new PDO("mysql:host=$this->serveur;dbname=$this->database", $this->login, $this->pw);
+                    echo "Connexion successfull";
+                }catch (Exception $e) {
+                    die('Erreur : '. $e->getMessage());     
+                }
+            }
 
-            return $info =[$nom,$prenom,$adresse,$ville,$codepostal,$civiliter,$naissance,$lieuNaissance,$numsecu];
-        }
+            private function getValuePostClient(){
+                $nom = $_POST['user_nom'];
+                $prenom = $_POST['user_prenom'];
+                $adresse = $_POST['user_adresse'];
+                $ville = $_POST['user_ville'];
+                $codepostal = $_POST['user_code_postal'];
+                $civiliter = $_POST['user_civile'];
+                $naissance = $_POST['user_naissance'];
+                $lieuNaissance = $_POST['user_lieu_naissance'];
+                $numsecu = $_POST['user_num_secu'];
+                $id_medecin = $_POST['user_id_medecin'];
 
-        public function insertExecPatient(){
-            $info = $this.getValuePost();
-            $req = $linkpdo->prepare('INSERT INTO patient (num_securite_social, nom, prenom, 
-                                                            adresse, code_postal,date_naissance ,civilite,	lieu_naissance ,id_medecin,	Ville  )
-            VALUES(:num_securite_social, :nom, :prenom, :adresse, :code_postal, 
-                    :date_naissance ,:civilite,	:lieu_naissance ,:id_medecin,:Ville)'); 
+                return array($nom,$prenom,$adresse,$ville,$codepostal,$civiliter,$naissance,$lieuNaissance,$numsecu,$id_medecin);
+            }
+            private function getValuePostMedecin(){
+                $nom['nom'] = $_POST['user_nom'];
+                $prenom['prenom'] = $_POST['user_prenom'];
+                $civiliter= $_POST['user_civilite'];
+                return out($nom,$prenom,$civiliter);
+            }
 
-            $req->execute(array('num_securite_social' => $this->getValuePost[0], 'nom', 'prenom', 
-            'adresse', 'code_postal','date_naissance' ,'civilite',	'lieu_naissance' ,'id_medecin',	'Ville'));
-        }
+            public function insertExecPatient(){
+                $info = $this.getValuePostClient();
+                $req = $linkpdo->prepare('INSERT INTO patient (num_securite_social, nom, prenom, 
+                                                                adresse, code_postal,date_naissance ,civilite,	lieu_naissance ,id_medecin,	Ville  )
+                VALUES(:num_securite_social, :nom, :prenom, :adresse, :code_postal, 
+                        :date_naissance ,:civilite,	:lieu_naissance ,:id_medecin,:Ville)'); 
 
-        public function insertMedecin(){
+                $req->execute(array('num_securite_social' => $this->getValuePostClient()[8],
+                                    'nom' => $this->getValuePostClient()[0],
+                                    'prenom' => $this->getValuePostClient()[1], 
+                                    'adresse' => $this->getValuePostClient()[2],
+                                    'code_postal' => $this->getValuePostClient()[4],
+                                    'date_naissance' => $this->getValuePostClient()[6] ,
+                                    'civilite' => $this->getValuePostClient()[5],
+                                    'lieu_naissance' => $this->getValuePostClient()[7] , 
+                                    'id_medecin' => $this->getValuePostClient()[9],
+                                    'Ville' => $this->getValuePostClient()[3]));
+            }
 
-        }
-    }
-?>
+            public function insertMedecin(){
+                $this->tryConnexion()
+                $req = $this->pdo->prepare('INSERT INTO medecin (nom, prenom, civilite )
+                                            VALUES( :nom, :prenom,:civilite)');  
+
+                $req->execute(array('nom' => $this->getValuePostMedecin['nom'],
+                                    'prenom' => $this->getValuePostMedecin['prenom'],
+                                    'civilite' => $this->getValuePostMedecin['civiliter']));
+            }
+        };
+    ?>
+</html>

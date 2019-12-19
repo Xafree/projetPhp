@@ -1,6 +1,6 @@
 <!DOCTYPE html>
     <head>
-        <meta charset = >
+        <meta charset = 'UTF8'>
         <link rel= type= href=>
         <title> Page Title</title>
     </head>
@@ -16,12 +16,12 @@
                     - La prise de rendez-vous du client doit être en quelquc clique<br/>
                     - Vérifier la régle des 3 clique  <br/>               
             </p>
-
-            <h2>Le formulaire d'entrée</h2>
-        <form action="controllers/index.php" method="POST">
+            <!--
+            <h2>Le formulaire d'entrée client </h2>
+        <form action="Index.php" method="POST">
             <div>
                 <label for="nom">Nom :</label>
-                <input type="text" id="nom" name="user_name" >
+                <input type="text" id="nom" name="user_nom" >
             </div>
             <div>
                 <label for="Prenom">Prénom :</label>
@@ -51,8 +51,32 @@
                 <label for="Num_secu">Numéro de sécurité social :</label>
                 <input type="number" id="résultat" name="user_num_secu" >
             </div>
+            <div>
+                <label for="Num_secu">Nom médecin :</label>
+                <input type="number" id="résultat" name="user_id_medecin" >
+            </div>
             <input type="submit" id="envoyer" name="user_valider" value="Valider">
             <input type="reset" id="envoyer" name="user_valider" value="Effacer">
+        </form>
+
+        -->
+        <h2>Le formulaire d'entrée médecin </h2>
+        <form action="controllers/connexion.php" method="POST">
+            <div>
+                <label for="nom">Nom :</label>
+                <input type="text" id="nom" name="user_nom" >
+            </div>
+            <div>
+                <label for="Prenom">Prénom :</label>
+                <input type="text" id="Prénom" name="user_prenom" >
+            </div>
+            <div>
+                <label for="civilité">civilité :</label>
+                <input type="text" id="Adresse" name="user_civilite" >
+            </div>
+
+            <input type="submit" id="envoyer" name="user_valider" value="Valider">
+            <input type="reset" id="reset" name="user_effacer" value="Effacer">
         </form>
     </body>
 </html>
