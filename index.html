@@ -60,6 +60,13 @@
             </div>
             <input type="submit" id="envoyer" name="user_valider" value="Valider">
             <input type="reset" id="envoyer" name="user_valider" value="Effacer">
+
+            <?php 
+                if(isset($_POST['user_valider'])){
+                    echo "Information mise a jour";
+                }
+            ?>
+
         </form>
 
         <h2>Le formulaire d'entrée médecin </h2>
@@ -77,8 +84,13 @@
                 <input type="text" id="Adresse" name="med_civilite" >
             </div>
 
-            <input type="submit" id="envoyer" name="user_valider" value="Valider">
-            <input type="reset" id="reset" name="user_effacer" value="Effacer">
+            <input type="submit" id="envoyer" name="med_valider" value="Valider">
+            <input type="reset" id="reset" name="med_effacer" value="Effacer">
+            <?php 
+            if(isset($_POST['med_valider'])){
+                echo "Information mise a jour";
+            }
+        ?>
         </form>
     </body>
 </html>

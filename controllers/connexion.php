@@ -7,6 +7,7 @@
     $mdp = '';
     
     $connexion = new GestionDataBase($login,$mdp,$serveur,$db);
-    //$connexion->insertMedecin();
+    $connexion->insertMedecin();
     $connexion->insertExecPatient();
+    header('Location: C:\wamp64\www\projetPhp\index.html');
 ?>
