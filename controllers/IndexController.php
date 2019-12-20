@@ -18,7 +18,7 @@
 
             public function tryConnexion(){
                 try {  
-                 $this->pdo = $linkpdo = new PDO("mysql:host=$this->serveur;dbname=$this->database", $this->login, $this->pw);
+                 $this->pdo = new PDO("mysql:host=$this->serveur;dbname=$this->database", $this->login, $this->pw);
                     echo "Connexion successfull";
                 }catch (Exception $e) {
                     die('Erreur : '. $e->getMessage());     
@@ -40,10 +40,10 @@
                 return array($nom,$prenom,$adresse,$ville,$codepostal,$civiliter,$naissance,$lieuNaissance,$numsecu,$id_medecin);
             }
             private function getValuePostMedecin(){
-                $nom['nom'] = $_POST['user_nom'];
-                $prenom['prenom'] = $_POST['user_prenom'];
-                $civiliter= $_POST['user_civilite'];
-                return out($nom,$prenom,$civiliter);
+                $out['nom'] = $_POST['user_nom'];
+                $out['prenom'] = $_POST['user_prenom'];
+                $out['civiliter']= $_POST['user_civilite'];
+                return $out;
             }
 
             public function insertExecPatient(){
@@ -66,13 +66,13 @@
             }
 
             public function insertMedecin(){
-                $this->tryConnexion()
-                $req = $this->pdo->prepare('INSERT INTO medecin (nom, prenom, civilite )
+                $out = $this->getValuePostMedecin();
+                $this->tryConnexion();
+                $req = $this->pdo->prepare('INSERT INTO medecin (nom, prenom, civilite)
                                             VALUES( :nom, :prenom,:civilite)');  
-
-                $req->execute(array('nom' => $this->getValuePostMedecin['nom'],
-                                    'prenom' => $this->getValuePostMedecin['prenom'],
-                                    'civilite' => $this->getValuePostMedecin['civiliter']));
+                $req->execute(array('nom' => $out['nom'],
+                                          'prenom' => $out['prenom'],
+                                          'civilite' => $out['civiliter']));
             }
         };
     ?>
