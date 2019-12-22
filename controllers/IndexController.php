@@ -46,7 +46,7 @@
             public function insertExecPatient(){
                 $out = $this->getValuePostClient();
                 $this->tryConnexion();
-                $req = $this->pdo->prepare('INSERT INTO patient (num_securite_social, nom, prenom, adresse, code_postal, date_naissance ,civilite, lieu_naissance ,id_medecin, Ville)
+                $req = $this->pdo->prepare('INSERT INTO patient (num_securite_social,nom,prenom,adresse,code_postal,date_naissance,civilite,lieu_naissance,id_medecin,	Ville)
                                             VALUES(:num_securite_social, :nom, :prenom, :adresse, :code_postal, :date_naissance ,:civilite, :lieu_naissance, :id_medecin, :Ville)'); 
 
                 $req->execute(array('num_securite_social'   => $out['numsecu'],
