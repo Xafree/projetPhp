@@ -17,7 +17,7 @@
             public function tryConnexion(){
                 try {  
                     $this->pdo = new PDO("mysql:host=$this->serveur;dbname=$this->database", $this->login, $this->pw);
-                    echo "Connexion successfull";
+                    echo "Connexion successfull \n";
                 }catch (Exception $e) {
                     die('Erreur : '. $e->getMessage());     
                 }
@@ -36,6 +36,7 @@
                 $out['id_medecin']      = $_POST['user_id_medecin'];
                 return $out;
             }
+
             private function getValuePostMedecin(){
                 $out['nom']         = $_POST['med_nom'];
                 $out['prenom']      = $_POST['med_prenom'];
@@ -43,12 +44,11 @@
                 return $out;
             }
 
-            public function insertExecPatient(){
+            public function insertPatient(){
                 $out = $this->getValuePostClient();
                 $this->tryConnexion();
-                $req = $this->pdo->prepare('INSERT INTO patient (num_securite_social,nom,prenom,adresse,code_postal,date_naissance,civilite,lieu_naissance,id_medecin,	Ville)
-                                            VALUES(:num_securite_social, :nom, :prenom, :adresse, :code_postal, :date_naissance ,:civilite, :lieu_naissance, :id_medecin, :Ville)'); 
-
+                $req = $this->pdo->prepare('INSERT INTO patient(num_securite_social,nom,prenom,adresse,code_postal,date_naissance,civilite,lieu_naissance,id_medecin, ville)
+                                            VALUES(:num_securite_social, :nom, :prenom, :adresse, :code_postal, :date_naissance ,:civilite, :lieu_naissance, :id_medecin, :ville)'); 
                 $req->execute(array('num_securite_social'   => $out['numsecu'],
                                     'nom'                   => $out['nom'],
                                     'prenom'                => $out['prenom'], 
@@ -58,7 +58,7 @@
                                     'civilite'              => $out['civiliter'],
                                     'lieu_naissance'        => $out['lieuNaissance'], 
                                     'id_medecin'            => $out['id_medecin'],
-                                    'Ville'                 => $out['ville']));
+                                    'ville'                 => $out['ville']));
             }
 
             public function insertMedecin(){
@@ -69,6 +69,29 @@
                 $req->execute(array('nom'       => $out['nom'],
                                     'prenom'    => $out['prenom'],
                                     'civilite'  => $out['civiliter']));
+            } 
+            
+            public function requetePatient(){
+                $requete = "SELECT * FROM `patient`";
+                $this->tryConnexion();
+                
+
             }
+
+            public function deleteMed($med){
+                $chek = "SELECT nom from `medecin` where `medecin`.`nom` = '$med";
+                $sql = "DELETE FROM `medecin` WHERE `medecin`.`nom` = '$med'";
+                $this->tryConnexion();
+                $resChek = $this->pdo->query($chek);
+                var_dump($resChek);
+                    echo $med."\n";
+                if($resChek == false){ // comprend pas pourquoi ca renvoie faux 
+                    $this->pdo->query($sql);
+                }else{
+                    echo " nous avons pas ce nom dans la base de donné ";
+                }     
+                
+            }
+
         };
 ?>
